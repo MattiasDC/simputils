@@ -1,4 +1,3 @@
-from itertools import izip as zip
 import operator
 
 def is_sorted(r, key=operator.le):
