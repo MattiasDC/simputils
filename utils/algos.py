@@ -4,7 +4,7 @@ from .functional import identity
 
 def is_sorted(iterable, key=identity):
 	sentinel = object()
-	iterable_shifted = iter(r)
+	iterable_shifted = iter(iterable)
 	if next(iterable_shifted, sentinel) is sentinel:
 		return True # empty iterable
 	return all(key(a) <= key(b) for a, b in zip(iterable, iterable_shifted))
