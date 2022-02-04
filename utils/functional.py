@@ -3,7 +3,7 @@ def identity(x):
 
 
 """
-Mutable monad of immutable object.
+Mutable wrapper of an immutable object.
 Stores an object which allows to set and get it.
 Typical usecase is the following pattern:
 
