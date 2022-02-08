@@ -32,5 +32,5 @@ class Mutable:
     def set(self, x):
         self.x = x
 
-    def get(self, x):
+    def get(self):
         return self.x
