@@ -5,10 +5,11 @@ class conditionally_cached(cached):
     """
     An async cache which conditionally caches values based on a function.
     This implementation is built on top of
-    [cached](https://aiocache.readthedocs.io/en/latest/caches.html#cache)
+    [cached](https://aiocache.readthedocs.io/en/latest/caches.html#cache).
+    By default None values are not cached.
     """
 
-    def __init__(self, condition, **kwargs):
+    def __init__(self, condition=lambda r: r is not None, **kwargs):
         super().__init__(**kwargs)
         self.condition = condition
 
