@@ -1,5 +1,5 @@
 from collections import defaultdict
-from itertools import chain, filterfalse, groupby, zip_longest
+from itertools import chain, filterfalse, groupby, islice, zip_longest
 
 from more_itertools import flatten
 
@@ -58,6 +58,11 @@ def max_dist_indices(n):
     """Generates a sequence of indices up to `n`.
     The indices are sequenced to be as distant as possible
     from any other previously generated index.
+
+    E.g.
+    n == 11,
+    A possible sequence conforming this property is:
+    0, 10, 5, 3, 7, 2, 8, 1, 4, 6, 9
     """
     if n == 0:
         return
@@ -68,3 +73,32 @@ def max_dist_indices(n):
     yield 0
     yield n - 1
     yield from max_dist_indices_impl(1, n - 2)
+
+
+def rangify(sorted_integer_sequence):
+    """
+    Turns a list of sorted integers into a list of range definitions.
+    Duplicates are not allowed.
+
+    E.g.
+    [1, 2, 3, 7, 8, 10, 11]
+    Becomes
+
+    [range(1, 4), range(7, 9), range(10, 12)]
+    """
+
+    assert sorted(sorted_integer_sequence)
+    assert len(sorted_integer_sequence) == len(set(sorted_integer_sequence))
+
+    ranges = []
+    current_start = sorted_integer_sequence[0]
+    for i, j in zip(sorted_integer_sequence, islice(sorted_integer_sequence, 1, None)):
+        if j == i + 1:
+            continue
+        else:
+            ranges.append(range(current_start, i + 1))
+            current_start = j
+
+    ranges.append(range(current_start, sorted_integer_sequence[-1] + 1))
+
+    return ranges
