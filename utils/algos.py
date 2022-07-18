@@ -87,7 +87,7 @@ def rangify(sorted_integer_sequence):
     [range(1, 4), range(7, 9), range(10, 12)]
     """
 
-    assert sorted(sorted_integer_sequence)
+    assert is_sorted(sorted_integer_sequence)
     assert len(sorted_integer_sequence) == len(set(sorted_integer_sequence))
 
     ranges = []
@@ -102,3 +102,36 @@ def rangify(sorted_integer_sequence):
     ranges.append(range(current_start, sorted_integer_sequence[-1] + 1))
 
     return ranges
+
+
+def inverse_ranges(ranges, start=None, stop=None):
+    """
+    Takes the inverse of a list of ranges.
+    The result is a list of ranges, not contained in the given list.
+    By default the start is the start of the first range.
+    By default the stop is the stop of the last range.
+    The given list of ranges should be sorted and non-overlapping.
+    """
+    assert is_sorted(ranges, key=lambda r: (r.start, r.stop))
+
+    if start is None:
+        start = ranges[0].start
+    if stop is None:
+        stop = ranges[-1].stop
+
+    inverse_ranges = []
+    for r in ranges:
+        if start >= r.stop:
+            continue
+        if stop <= r.start:
+            break
+
+        if r.start - start > 0:
+            inverse_ranges.append(range(start, r.start))
+
+        start = r.stop
+
+    if start < stop:
+        inverse_ranges.append(range(start, stop))
+
+    return inverse_ranges
