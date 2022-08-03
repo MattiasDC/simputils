@@ -1,22 +1,22 @@
-# py-utils
+# simputils
 
-py-utils is a Python library that groups several generic utility functions and algorithms.
+simputils is a Python library that groups several generic utility functions and algorithms and that tries too hard to do too much for you.
 
 ## Installation
 
-Use the package manager [pip](https://pip.pypa.io/en/stable/) to install py-utils.
+Use the package manager [pip](https://pip.pypa.io/en/stable/) to install simputils.
 
 ```bash
-pip install py-utils @ git+https://bitbucket.org/MattiasDC/py-utils.git
+pip install simputils
 ```
 
 ## Usage
 
 ```python
-import utils
+import simputils
 
 # returns whether range(10) is sorted
-utils.algos.is_sorted(range(10))
+simputils.algos.is_sorted(range(10))
 ```
 
 ## Contributing
