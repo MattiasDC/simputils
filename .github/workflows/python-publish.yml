@@ -22,7 +22,7 @@ jobs:
               - 'simputils/__version__.py'
   deploy:
     needs: changes
-    if: ${{ needs.changes.outputs.version == 'true' }}
+    if: needs.changes.outputs.version == 'true'
     runs-on: ubuntu-latest
     steps:
       - name: Set up Python
