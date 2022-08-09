@@ -11,6 +11,8 @@ permissions:
 jobs:
   changes:
     runs-on: ubuntu-latest
+    outputs:
+      version-changed: ${{ steps.filter.outputs.version }}
     steps:
       - uses: actions/checkout@v3
       - name: Check version change
@@ -22,7 +24,7 @@ jobs:
               - 'simputils/__version__.py'
   deploy:
     needs: changes
-    if: needs.changes.outputs.version == 'true'
+    if: needs.changes.outputs.version-changed == 'true'
     runs-on: ubuntu-latest
     steps:
       - name: Set up Python
