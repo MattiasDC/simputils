@@ -9,7 +9,7 @@ permissions:
   contents: read
 
 jobs:
-  deploy:
+  changes:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -20,21 +20,24 @@ jobs:
           filters: |
             version:
               - 'simputils/__version__.py'
-      - if: steps.changes.outputs.version == 'true'
-        run:
-          - name: Set up Python
-            uses: actions/setup-python@v3
-            with:
-              python-version: '3.9'
-          - name: Install dependencies
-            run: |
-              python -m pip install --upgrade pip
-              python -m pip install build
-          - name: Build package
-            run: python -m build
-          - name: Publish package
-            uses:
-              pypa/gh-action-pypi-publish@27b31702a0e7fc50959f5ad993c78deac1bdfc29
-            with:
-              user: __token__
-              password: ${{ secrets.PYPI_API_TOKEN }}
+  deploy:
+    needs: changes
+    if: ${{ needs.changes.outputs.version == 'true' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: '3.9'
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install build
+      - name: Build package
+        run: python -m build
+      - name: Publish package
+        uses:
+          pypa/gh-action-pypi-publish@27b31702a0e7fc50959f5ad993c78deac1bdfc29
+        with:
+          user: __token__
+          password: ${{ secrets.PYPI_API_TOKEN }}
