@@ -2,9 +2,6 @@
 name: Upload Python Package
 on:
   push:
-    branches:
-      - master
-  pull_request:
     branches: master
 
 permissions:
@@ -46,3 +43,17 @@ jobs:
         with:
           user: __token__
           password: ${{ secrets.PYPI_API_TOKEN }}
+  create-tag:
+    needs: changes
+    if: needs.changes.outputs.version-changed == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Read version
+        id: version
+        run: |
+          version = $(python setup.py --version)
+          echo "version=$version" >> $GITHUB_ENV
+      - uses: rickstaa/action-create-tag@v1
+        with:
+          tag: ${{ env.version }}
