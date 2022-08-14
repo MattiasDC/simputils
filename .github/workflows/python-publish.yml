@@ -53,7 +53,5 @@ jobs:
         id: version
         run: |
           version=$(python setup.py --version)
-          echo "version=$version" >> $GITHUB_ENV
-      - uses: rickstaa/action-create-tag@v1.3.7
-        with:
-          tag: ${{ env.version }}
+          git tag $version
+          git push origin $version
