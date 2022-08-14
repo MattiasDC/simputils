@@ -52,7 +52,7 @@ jobs:
       - name: Read version
         id: version
         run: |
-          version = $(python setup.py --version)
+          version=$(python setup.py --version)
           echo "version=$version" >> $GITHUB_ENV
       - uses: rickstaa/action-create-tag@v1
         with:
