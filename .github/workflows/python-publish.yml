@@ -57,3 +57,4 @@ jobs:
       - uses: rickstaa/action-create-tag@v1
         with:
           tag: ${{ env.version }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
