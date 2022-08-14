@@ -4,9 +4,6 @@ on:
   push:
     branches: master
 
-permissions:
-  contents: read
-
 jobs:
   changes:
     runs-on: ubuntu-latest
@@ -53,5 +50,7 @@ jobs:
         id: version
         run: |
           version=$(python setup.py --version)
-          git tag $version
-          git push origin $version
+          echo "version=$version" >> $GITHUB_ENV
+      - uses: rickstaa/action-create-tag@v1.3.7
+        with:
+          tag: ${{ env.version }}
